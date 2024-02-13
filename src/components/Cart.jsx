@@ -7,6 +7,7 @@ const Cart = () => {
   // qui dentro uso useSelector per recuperare di nuovo l'array di film
   const cart = useSelector((state) => state.cart.content)
   const dispatch = useDispatch()
+  const availableBooks = useSelector((state) => state.book.available) // lista dei libri in stock
 
   return (
     <Row>
@@ -41,6 +42,11 @@ const Cart = () => {
             0
           )}
           $
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={12} className="fw-bold mb-3 ms-4">
+          Totale libri disponibili: {availableBooks.length}
         </Col>
       </Row>
     </Row>
