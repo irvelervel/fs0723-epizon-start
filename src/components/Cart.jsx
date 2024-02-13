@@ -1,6 +1,7 @@
 import { Col, Row, Button } from 'react-bootstrap'
 import { FaTrash } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
+import { DELETE_FROM_CART } from '../redux/actions'
 
 const Cart = () => {
   // qui dentro uso useSelector per recuperare di nuovo l'array di film
@@ -18,7 +19,7 @@ const Cart = () => {
                 onClick={() => {
                   console.log('ELIMINO IL LIBRO')
                   dispatch({
-                    type: 'DELETE_FROM_CART',
+                    type: DELETE_FROM_CART,
                     payload: i, // indice del libro, così saprò quale rimuovere dall'array del cart
                   })
                 }}

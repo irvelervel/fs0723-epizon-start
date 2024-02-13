@@ -1,5 +1,7 @@
 // qui dentro vado ora a scrivere il mio reducer, la mia funzione PURA
 
+import { ADD_TO_CART, DELETE_FROM_CART } from '../actions'
+
 // un reducer necessita dello stato INIZIALE del nostro applicativo
 const initialState = {
   cart: {
@@ -15,7 +17,7 @@ const mainReducer = (state = initialState, action) => {
     // "type" è l'unica proprietà OBBLIGATORIA di una action
 
     // cominciare a specificare un po' di "binari"
-    case 'ADD_TO_CART':
+    case ADD_TO_CART:
       // state.cart.content.push(action.payload) // VIETATISSIMA!
       // in un reducer, poichè è una funzione PURA, non si possono usare metodi che ALTERANO
       // i parametri (in particolare l'oggetto state)
@@ -30,7 +32,7 @@ const mainReducer = (state = initialState, action) => {
         },
       }
 
-    case 'DELETE_FROM_CART':
+    case DELETE_FROM_CART:
       return {
         ...state,
         cart: {

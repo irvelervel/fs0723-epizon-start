@@ -1,6 +1,7 @@
 import { Col, Row, Button } from 'react-bootstrap'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
+import { ADD_TO_CART } from '../redux/actions'
 
 const BookDetail = ({ bookSelected }) => {
   // useDispatch ci permette di "dispatchare" un'azione
@@ -42,7 +43,7 @@ const BookDetail = ({ bookSelected }) => {
                   // vorrei aggiungere un libro al carrello
                   console.log('AGGIUNGO LIBRO')
                   dispatch({
-                    type: 'ADD_TO_CART', // proprietà obbligatoria
+                    type: ADD_TO_CART, // proprietà obbligatoria
                     payload: bookSelected, // proprietà caldamente consigliata perchè passa un dato!
                   })
                 }}
