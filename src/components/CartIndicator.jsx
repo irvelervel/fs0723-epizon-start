@@ -4,7 +4,7 @@ import { FaShoppingCart } from 'react-icons/fa'
 // per LEGGERE un valore dal Redux Store è necessario importare l'hook useSelector
 import { useSelector, useDispatch } from 'react-redux'
 import { useState } from 'react'
-import { setUsernameAction } from '../redux/actions'
+import { resetCart, setUsernameAction } from '../redux/actions'
 
 const CartIndicator = () => {
   const navigate = useNavigate()
@@ -30,13 +30,14 @@ const CartIndicator = () => {
     e.preventDefault()
     // ora dobbiamo "dispatchare" un'action che porterà al reducer il nostro username, per salvarlo nella slice "user"
     dispatch(setUsernameAction(inputValue))
+    setInputValue('') // svuotiamo l'input
   }
 
   return (
     <div className="d-flex justify-content-end my-4">
       {username ? (
-        <>
-          <span>Ciao, {username}!</span>
+        <div className="d-flex align-items-center">
+          <span className="me-2">Ciao, {username}!</span>
           <Button
             onClick={() => navigate('/cart')}
             className="d-flex align-items-center"
@@ -44,13 +45,23 @@ const CartIndicator = () => {
             <FaShoppingCart />
             <span className="ms-2">{buttonLabel}</span>
           </Button>
-        </>
+          <Button
+            variant="danger"
+            onClick={() => {
+              dispatch(setUsernameAction('')) // svuotiamo lo username nello store
+              dispatch(resetCart()) // resettiamo il carrello nuovamente a []
+            }}
+          >
+            ESCI
+          </Button>
+        </div>
       ) : (
         <Form onSubmit={handleSubmit}>
           <InputGroup className="mb-3">
             <Form.Control
               placeholder="Inserisci username"
               aria-label="Inserisci username"
+              required
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
             />

@@ -1,11 +1,19 @@
 // questo è il file principale della nostra implementazion di redux
 // qui creeremo il vero e proprio "store", la memoria centralizzata
 
-import { configureStore } from '@reduxjs/toolkit'
-import mainReducer from '../reducers' // è come puntare a ../reducers/index
+import { configureStore, combineReducers } from '@reduxjs/toolkit'
+import cartReducer from '../reducers/cart'
+import userReducer from '../reducers/user'
+
+const globalReducer = combineReducers({
+  // in questo oggetto RI-UNIFICO tutti i reducers!
+  cart: cartReducer,
+  user: userReducer,
+  // ad ogni reducer assegno una chiave (es. "cart"), che sarà il nome della sua slice
+})
 
 const store = configureStore({
-  reducer: mainReducer,
+  reducer: globalReducer,
 })
 
 export default store

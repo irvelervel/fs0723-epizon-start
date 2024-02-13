@@ -1,7 +1,7 @@
 import { Col, Row, Button } from 'react-bootstrap'
 import { FaShoppingCart } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
-import { ADD_TO_CART, addToCartAction } from '../redux/actions'
+import { addToCartAction } from '../redux/actions'
 
 const BookDetail = ({ bookSelected }) => {
   // useDispatch ci permette di "dispatchare" un'azione
