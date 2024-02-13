@@ -1,11 +1,15 @@
-import { Button } from 'react-bootstrap'
+import { Button, Form, InputGroup } from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom'
 import { FaShoppingCart } from 'react-icons/fa'
 // per LEGGERE un valore dal Redux Store è necessario importare l'hook useSelector
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { useState } from 'react'
+import { setUsernameAction } from '../redux/actions'
 
 const CartIndicator = () => {
   const navigate = useNavigate()
+  const [inputValue, setInputValue] = useState('') // salvo COMUNQUE il valore dell'input in uno stato locale
+  const dispatch = useDispatch()
 
   // questo componente deve mostrare la lunghezza dell'array content dentro il sotto-oggetto cart
   // come etichetta del bottone (non uno 0 fisso!)
@@ -17,15 +21,45 @@ const CartIndicator = () => {
   // FORMA ABBREVIATA:
   // const buttonLabel = useSelector((state) => state.cart.content.length)
 
+  // altro useSelector per controllare se l'utente è loggato
+  // se lo è, verrà mostrato il bottone con la lunghezza del carrello (che funge anche da link a /cart)
+  // altrimenti verrà proposto un input per fare il login
+  const username = useSelector((state) => state.user.username) // stringa vuota '' all'inizio
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    // ora dobbiamo "dispatchare" un'action che porterà al reducer il nostro username, per salvarlo nella slice "user"
+    dispatch(setUsernameAction(inputValue))
+  }
+
   return (
     <div className="d-flex justify-content-end my-4">
-      <Button
-        onClick={() => navigate('/cart')}
-        className="d-flex align-items-center"
-      >
-        <FaShoppingCart />
-        <span className="ms-2">{buttonLabel}</span>
-      </Button>
+      {username ? (
+        <>
+          <span>Ciao, {username}!</span>
+          <Button
+            onClick={() => navigate('/cart')}
+            className="d-flex align-items-center"
+          >
+            <FaShoppingCart />
+            <span className="ms-2">{buttonLabel}</span>
+          </Button>
+        </>
+      ) : (
+        <Form onSubmit={handleSubmit}>
+          <InputGroup className="mb-3">
+            <Form.Control
+              placeholder="Inserisci username"
+              aria-label="Inserisci username"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+            />
+            <Button type="submit" variant="outline-primary">
+              VAI
+            </Button>
+          </InputGroup>
+        </Form>
+      )}
     </div>
   )
 }

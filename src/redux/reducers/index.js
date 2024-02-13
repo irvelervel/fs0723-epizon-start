@@ -1,11 +1,15 @@
 // qui dentro vado ora a scrivere il mio reducer, la mia funzione PURA
 
-import { ADD_TO_CART, DELETE_FROM_CART } from '../actions'
+import { ADD_TO_CART, DELETE_FROM_CART, SET_USERNAME } from '../actions'
 
 // un reducer necessita dello stato INIZIALE del nostro applicativo
+// uno store si divide in "slices"
 const initialState = {
   cart: {
     content: [], // array di libri nel carrello
+  },
+  user: {
+    username: '',
   },
 }
 
@@ -44,6 +48,15 @@ const mainReducer = (state = initialState, action) => {
           //   ],
           content: state.cart.content.filter((book, i) => i !== action.payload), // tieni tutti i libri
           // ma escludi quello che ha i come action.payload (che è l'indice del libro da eliminare)
+        },
+      }
+
+    case SET_USERNAME:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          username: action.payload,
         },
       }
 
